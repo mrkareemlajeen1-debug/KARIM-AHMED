@@ -133,6 +133,26 @@ background:#111;
 color:#fff;
 font-size:14px;
 outline:none
+}.date-picker{
+position:relative;
+width:100%;
+padding:13px;
+margin-bottom:10px;
+border-radius:10px;
+border:1px solid #5d481b;
+background:#111;
+color:#fff;
+font-size:14px;
+cursor:pointer
+}
+
+.date-picker input{
+position:absolute;
+inset:0;
+width:100%;
+height:100%;
+opacity:0;
+cursor:pointer
 }
 
 .input:focus{
@@ -229,14 +249,17 @@ placeholder="Your Name"
 
 <!-- DATE -->
 
+<div class="date-picker">
+
+<span id="dateText">📅 Choose Date</span>
+
 <input
 id="appointmentDate"
-class="input"
 type="date"
-aria-label="Choose Date"
-onchange="updateAvailableTimes()"
+onchange="dateSelected()"
 >
 
+</div>
 
 <!-- TIME -->
 
@@ -312,7 +335,35 @@ document.getElementById("appointmentBox").style.display="none";
 
 }
 
+function dateSelected(){
 
+var date=
+document.getElementById("appointmentDate").value;
+
+if(date===""){
+
+document.getElementById("dateText").textContent=
+"📅 Choose Date";
+
+return;
+
+}
+
+var formatted=
+new Date(date+"T00:00:00").toLocaleDateString("en-GB",{
+
+day:"2-digit",
+month:"2-digit",
+year:"numeric"
+
+});
+
+document.getElementById("dateText").textContent=
+"📅 "+formatted;
+
+updateAvailableTimes();
+
+}
 /* UPDATE AVAILABLE TIMES */
 
 function updateAvailableTimes(){
