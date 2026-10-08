@@ -225,12 +225,6 @@ type="text"
 placeholder="Your Name"
 >
 
-<input
-id="appointmentDate"
-class="input"
-type="datetime-local"
->
-
 <textarea
 id="appointmentReason"
 class="input"
@@ -269,26 +263,127 @@ block:"center"
 function hideAppointment(){
 document.getElementById("appointmentBox").style.display="none";
 }
+function updateAvailableTimes(){
 
+var dateInput = document.getElementById("appointmentDate");
+var timeInput = document.getElementById("appointmentTime");
+
+timeInput.innerHTML = '<option value="">Choose available time</option>';
+timeInput.disabled = true;
+
+if(dateInput.value === ""){
+return;
+}
+
+var selectedDate = new Date(dateInput.value + "T00:00:00");
+var day = selectedDate.getDay();
+
+/*
+0 = Sunday
+1 = Monday
+2 = Tuesday
+3 = Wednesday
+4 = Thursday
+5 = Friday
+6 = Saturday
+
+Allowed:
+Saturday = 6
+Sunday = 0
+Monday = 1
+Tuesday = 2
+Wednesday = 3
+*/
+
+if(day >= 4 && day <= 5){
+
+alert("Appointments are available from Saturday to Wednesday only.");
+
+dateInput.value = "";
+
+return;
+}
+
+
+/* Morning */
+
+var morningTimes = [
+"09:30",
+"10:00",
+"10:30",
+"11:00",
+"11:30",
+"12:00",
+"12:30"
+];
+
+
+/* Evening */
+
+var eveningTimes = [
+"17:30",
+"18:00",
+"18:30",
+"19:00",
+"19:30",
+"20:00",
+"20:30"
+];
+
+
+var allTimes = morningTimes.concat(eveningTimes);
+
+allTimes.forEach(function(time){
+
+var option = document.createElement("option");
+
+option.value = time;
+option.textContent = formatTime(time);
+
+timeInput.appendChild(option);
+
+});
+
+timeInput.disabled = false;
+
+}
+
+
+function formatTime(time){
+
+var parts = time.split(":");
+
+var hour = parseInt(parts[0]);
+var minute = parts[1];
+
+var period = hour >= 12 ? "PM" : "AM";
+
+var displayHour = hour % 12;
+
+if(displayHour === 0){
+displayHour = 12;
+}
+
+return displayHour + ":" + minute + " " + period;
+
+}
 function sendAppointment(){
 
 var name=document.getElementById("visitorName").value.trim();
 var date=document.getElementById("appointmentDate").value;
+var time=document.getElementById("appointmentTime").value;
 var reason=document.getElementById("appointmentReason").value.trim();
 
-if(name==="" || date==="" || reason===""){
+if(name==="" || date==="" || time==="" || reason===""){
 alert("Please complete all fields.");
 return;
 }
 
-var formattedDate=new Date(date).toLocaleString("en-GB",{
+var formattedDate=new Date(date+"T00:00:00").toLocaleDateString("en-GB",{
 day:"2-digit",
 month:"2-digit",
-year:"numeric",
-hour:"2-digit",
-minute:"2-digit"
-});
-
+year:"numeric"
+}) + " - " + formatTime(time);
 var message=
 "Hello Karim,%0A%0A"+
 "I would like to book an appointment.%0A%0A"+
