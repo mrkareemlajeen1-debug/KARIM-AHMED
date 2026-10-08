@@ -5,22 +5,24 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#050505">
 <title>Karim Ahmed | Senior Accountant</title>
+
 <style>
-*{
-box-sizing:border-box
-}
+*{box-sizing:border-box}
+
 body{
 margin:0;
 background:#050505;
 color:#f5f1e7;
 font-family:Arial,Helvetica,sans-serif
 }
+
 .wrap{
 max-width:520px;
 margin:auto;
 min-height:100vh;
 padding:22px 16px 35px
 }
+
 .card{
 background:linear-gradient(145deg,#111,#050505);
 border:1px solid #b88a20;
@@ -28,6 +30,11 @@ border-radius:24px;
 padding:22px;
 box-shadow:0 0 35px rgba(199,154,34,.16)
 }
+
+.gold{
+color:#d4aa3d
+}
+
 .brand{
 letter-spacing:3px;
 font-size:12px;
@@ -35,60 +42,71 @@ color:#d4aa3d;
 text-align:center;
 margin-bottom:15px
 }
+
 h1{
 text-align:center;
 font-size:30px;
 margin:5px 0
 }
+
 .role{
 text-align:center;
 color:#d8d0c0;
 font-size:15px;
 margin-bottom:20px
 }
+
 img{
 width:100%;
 border-radius:14px;
 border:1px solid #9b751f;
 display:block
 }
-/* BUTTONS */
+
 .actions{
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:10px;
 margin:18px 0
 }
+
 a.btn{
 display:block;
 text-align:center;
 text-decoration:none;
 padding:13px 8px;
 border-radius:12px;
-border:1px solid #d4aa3d;
-background:linear-gradient(
-135deg,
-#c89a2c,
-#8c6415
-);
-color:#080808;
-font-weight:bold;
-font-size:14px;
-box-shadow:
-0 3px 10px rgba(199,154,34,.18);
-transition:.2s
+border:1px solid #b88a20;
+color:#f5f1e7;
+background:#111;
+font-weight:bold
 }
-a.btn:hover{
-transform:translateY(-1px);
-background:linear-gradient(
-135deg,
-#d4aa3d,
-#a8791d
-);
-box-shadow:
-0 4px 14px rgba(199,154,34,.28)
+
+a.primary{
+background:linear-gradient(135deg,#c89a2c,#8c6415);
+color:#080808
 }
-/* APPOINTMENT FORM */
+
+.location{
+grid-column:1/-1
+}
+
+.appointment{
+grid-column:1/-1;
+background:linear-gradient(135deg,#c89a2c,#8c6415) !important;
+color:#080808 !important;
+font-size:15px
+}
+
+.footer{
+text-align:center;
+margin-top:18px;
+color:#8e8778;
+font-size:11px
+}
+
+/* Appointment Box */
+
 #appointmentBox{
 display:none;
 margin-top:15px;
@@ -97,5 +115,195 @@ border:1px solid #b88a20;
 border-radius:16px;
 background:#0b0b0b
 }
+
 #appointmentBox h2{
-margin:0 0
+margin:0 0 15px;
+text-align:center;
+font-size:20px;
+color:#d4aa3d
+}
+
+.input{
+width:100%;
+padding:13px;
+margin-bottom:10px;
+border-radius:10px;
+border:1px solid #5d481b;
+background:#111;
+color:#fff;
+font-size:14px;
+outline:none
+}
+
+.input:focus{
+border-color:#c99b31
+}
+
+textarea.input{
+height:90px;
+resize:none
+}
+
+.send{
+width:100%;
+padding:13px;
+border:none;
+border-radius:10px;
+background:linear-gradient(135deg,#c89a2c,#8c6415);
+color:#080808;
+font-weight:bold;
+font-size:15px;
+cursor:pointer
+}
+
+.cancel{
+width:100%;
+padding:10px;
+margin-top:8px;
+border:1px solid #5d481b;
+border-radius:10px;
+background:#111;
+color:#bbb;
+font-size:13px;
+cursor:pointer
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+<div class="card">
+
+<div class="brand">LAJEEN METALS</div>
+
+<h1>Karim Ahmed</h1>
+
+<div class="role">Senior Accountant</div>
+
+<img src="business-card-new.jpg" alt="Karim Ahmed business card">
+
+<div class="actions">
+
+<a class="btn primary" href="tel:+96594045736">
+📞 Call Me
+</a>
+
+<a class="btn" href="https://wa.me/96594045736">
+💬 WhatsApp
+</a>
+
+<a class="btn" href="https://mail.google.com/mail/?view=cm&fs=1&to=mr.kareem.lajeen.1@gmail.com" target="_blank">
+✉️ Email
+</a>
+
+<a class="btn" href="tel:+96524925788">
+☎️ Company
+</a>
+
+<a class="btn location" href="https://maps.google.com/maps?q=%D8%B4%D8%B1%D9%83%D8%A9%2B%D9%84%D8%A7%D8%AC%D9%8A%D9%86%2B%D9%84%D9%84%D9%85%D8%B9%D8%A7%D8%AF%D9%86%2B8W8P%2BMP3%D8%8C%2B%D8%A7%D9%84%D8%B4%D9%88%D9%8A%D8%AE%2B%D8%A7%D9%84%D8%B5%D9%86%D8%A7%D8%B9%D9%8A%D8%A9%2C%2B%D8%A7%D9%84%D9%83%D9%88%D9%8A%D8%AA" target="_blank">
+📍 Company Location
+</a>
+
+<a class="btn appointment" href="javascript:void(0)" onclick="showAppointment()">
+📅 Book an Appointment
+</a>
+
+</div>
+
+<!-- Appointment Form -->
+
+<div id="appointmentBox">
+
+<h2>📅 Book an Appointment</h2>
+
+<input
+id="visitorName"
+class="input"
+type="text"
+placeholder="Your Name"
+>
+
+<input
+id="appointmentDate"
+class="input"
+type="datetime-local"
+>
+
+<textarea
+id="appointmentReason"
+class="input"
+placeholder="Reason for the meeting"
+></textarea>
+
+<button class="send" onclick="sendAppointment()">
+💬 Send Appointment Request
+</button>
+
+<button class="cancel" onclick="hideAppointment()">
+Cancel
+</button>
+
+</div>
+
+<div class="footer">
+Digital Business Card • Karim Ahmed
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function showAppointment(){
+document.getElementById("appointmentBox").style.display="block";
+
+document.getElementById("appointmentBox").scrollIntoView({
+behavior:"smooth",
+block:"center"
+});
+}
+
+function hideAppointment(){
+document.getElementById("appointmentBox").style.display="none";
+}
+
+function sendAppointment(){
+
+var name=document.getElementById("visitorName").value.trim();
+var date=document.getElementById("appointmentDate").value;
+var reason=document.getElementById("appointmentReason").value.trim();
+
+if(name==="" || date==="" || reason===""){
+alert("Please complete all fields.");
+return;
+}
+
+var formattedDate=new Date(date).toLocaleString("en-GB",{
+day:"2-digit",
+month:"2-digit",
+year:"numeric",
+hour:"2-digit",
+minute:"2-digit"
+});
+
+var message=
+"Hello Karim,%0A%0A"+
+"I would like to book an appointment.%0A%0A"+
+"👤 Name: "+encodeURIComponent(name)+"%0A"+
+"📅 Requested Date & Time: "+encodeURIComponent(formattedDate)+"%0A"+
+"📝 Reason: "+encodeURIComponent(reason);
+
+var whatsappURL=
+"https://wa.me/96594045736?text="+message;
+
+window.open(whatsappURL,"_blank");
+
+}
+
+</script>
+
+</body>
+</html>
