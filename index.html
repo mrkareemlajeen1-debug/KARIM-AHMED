@@ -212,6 +212,7 @@ cursor:pointer
 
 </div>
 
+
 <!-- Appointment Form -->
 
 <div id="appointmentBox">
@@ -225,21 +226,56 @@ type="text"
 placeholder="Your Name"
 >
 
+
+<!-- DATE -->
+
+<input
+id="appointmentDate"
+class="input"
+type="date"
+onchange="updateAvailableTimes()"
+>
+
+
+<!-- TIME -->
+
+<select
+id="appointmentTime"
+class="input"
+disabled
+>
+
+<option value="">
+Choose available time
+</option>
+
+</select>
+
+
 <textarea
 id="appointmentReason"
 class="input"
 placeholder="Reason for the meeting"
 ></textarea>
 
-<button class="send" onclick="sendAppointment()">
+
+<button
+class="send"
+onclick="sendAppointment()"
+>
 💬 Send Appointment Request
 </button>
 
-<button class="cancel" onclick="hideAppointment()">
+
+<button
+class="cancel"
+onclick="hideAppointment()"
+>
 Cancel
 </button>
 
 </div>
+
 
 <div class="footer">
 Digital Business Card • Karim Ahmed
@@ -249,34 +285,58 @@ Digital Business Card • Karim Ahmed
 
 </div>
 
+
 <script>
 
+
+/* SHOW APPOINTMENT */
+
 function showAppointment(){
+
 document.getElementById("appointmentBox").style.display="block";
 
 document.getElementById("appointmentBox").scrollIntoView({
 behavior:"smooth",
 block:"center"
 });
+
 }
+
+
+/* HIDE APPOINTMENT */
 
 function hideAppointment(){
+
 document.getElementById("appointmentBox").style.display="none";
+
 }
+
+
+/* UPDATE AVAILABLE TIMES */
+
 function updateAvailableTimes(){
 
-var dateInput = document.getElementById("appointmentDate");
-var timeInput = document.getElementById("appointmentTime");
+var dateInput=document.getElementById("appointmentDate");
 
-timeInput.innerHTML = '<option value="">Choose available time</option>';
-timeInput.disabled = true;
+var timeInput=document.getElementById("appointmentTime");
 
-if(dateInput.value === ""){
+
+timeInput.innerHTML=
+'<option value="">Choose available time</option>';
+
+timeInput.disabled=true;
+
+
+if(dateInput.value===""){
 return;
 }
 
-var selectedDate = new Date(dateInput.value + "T00:00:00");
-var day = selectedDate.getDay();
+
+var selectedDate=
+new Date(dateInput.value+"T00:00:00");
+
+var day=selectedDate.getDay();
+
 
 /*
 0 = Sunday
@@ -288,26 +348,30 @@ var day = selectedDate.getDay();
 6 = Saturday
 
 Allowed:
-Saturday = 6
-Sunday = 0
-Monday = 1
-Tuesday = 2
-Wednesday = 3
+Saturday
+Sunday
+Monday
+Tuesday
+Wednesday
 */
 
-if(day >= 4 && day <= 5){
 
-alert("Appointments are available from Saturday to Wednesday only.");
+if(day===4 || day===5){
 
-dateInput.value = "";
+alert(
+"Appointments are available from Saturday to Wednesday only."
+);
+
+dateInput.value="";
 
 return;
 }
 
 
-/* Morning */
+/* MORNING */
 
-var morningTimes = [
+var morningTimes=[
+
 "09:30",
 "10:00",
 "10:30",
@@ -315,12 +379,14 @@ var morningTimes = [
 "11:30",
 "12:00",
 "12:30"
+
 ];
 
 
-/* Evening */
+/* EVENING */
 
-var eveningTimes = [
+var eveningTimes=[
+
 "17:30",
 "18:00",
 "18:30",
@@ -328,74 +394,139 @@ var eveningTimes = [
 "19:30",
 "20:00",
 "20:30"
+
 ];
 
 
-var allTimes = morningTimes.concat(eveningTimes);
+var allTimes=
+morningTimes.concat(eveningTimes);
+
 
 allTimes.forEach(function(time){
 
-var option = document.createElement("option");
+var option=
+document.createElement("option");
 
-option.value = time;
-option.textContent = formatTime(time);
+option.value=time;
+
+option.textContent=
+formatTime(time);
 
 timeInput.appendChild(option);
 
 });
 
-timeInput.disabled = false;
+
+timeInput.disabled=false;
 
 }
 
+
+/* FORMAT TIME */
 
 function formatTime(time){
 
-var parts = time.split(":");
+var parts=time.split(":");
 
-var hour = parseInt(parts[0]);
-var minute = parts[1];
+var hour=parseInt(parts[0]);
 
-var period = hour >= 12 ? "PM" : "AM";
+var minute=parts[1];
 
-var displayHour = hour % 12;
+var period=
+hour>=12 ? "PM" : "AM";
 
-if(displayHour === 0){
-displayHour = 12;
+var displayHour=
+hour%12;
+
+if(displayHour===0){
+displayHour=12;
 }
 
-return displayHour + ":" + minute + " " + period;
+return displayHour+":"+minute+" "+period;
 
 }
+
+
+/* SEND APPOINTMENT */
+
 function sendAppointment(){
 
-var name=document.getElementById("visitorName").value.trim();
-var date=document.getElementById("appointmentDate").value;
-var time=document.getElementById("appointmentTime").value;
-var reason=document.getElementById("appointmentReason").value.trim();
+var name=
+document.getElementById("visitorName").value.trim();
 
-if(name==="" || date==="" || time==="" || reason===""){
-alert("Please complete all fields.");
+var date=
+document.getElementById("appointmentDate").value;
+
+var time=
+document.getElementById("appointmentTime").value;
+
+var reason=
+document.getElementById("appointmentReason").value.trim();
+
+
+/* CHECK ALL FIELDS */
+
+if(
+name==="" ||
+date==="" ||
+time==="" ||
+reason===""
+){
+
+alert(
+"Please complete your name, date, time and reason for the meeting."
+);
+
 return;
+
 }
 
-var formattedDate=new Date(date+"T00:00:00").toLocaleDateString("en-GB",{
+
+/* FORMAT DATE */
+
+var formattedDate=
+new Date(
+date+"T00:00:00"
+).toLocaleDateString("en-GB",{
+
 day:"2-digit",
+
 month:"2-digit",
+
 year:"numeric"
-}) + " - " + formatTime(time);
+
+});
+
+
+/* WHATSAPP MESSAGE */
 
 var message=
 "Hello Karim,%0A%0A"+
 "I would like to book an appointment.%0A%0A"+
-"👤 Name: "+encodeURIComponent(name)+"%0A"+
-"📅 Requested Date & Time: "+encodeURIComponent(formattedDate)+"%0A"+
-"📝 Reason: "+encodeURIComponent(reason);
+"👤 Name: "+
+encodeURIComponent(name)+
+"%0A"+
+"📅 Date: "+
+encodeURIComponent(formattedDate)+
+"%0A"+
+"⏰ Time: "+
+encodeURIComponent(formatTime(time))+
+"%0A"+
+"📝 Reason: "+
+encodeURIComponent(reason);
+
+
+/* WHATSAPP */
 
 var whatsappURL=
-"https://wa.me/96594045736?text="+message;
+"https://wa.me/96594045736?text="+
+message;
 
-window.open(whatsappURL,"_blank");
+
+window.open(
+whatsappURL,
+"_blank"
+);
 
 }
 
